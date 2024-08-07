@@ -1,17 +1,12 @@
 <script setup>
-import { ref, onMounted } from 'vue';
+import { store } from '../store';
 import { useRouter } from 'vue-router';
 
-const isLoggedIn = ref(false);
 const router = useRouter();
 
-onMounted(() => {
-    isLoggedIn.value = !!localStorage.getItem('access_token');
-});
-
-const logout = () => {
+const handleLogout = () => {
     localStorage.removeItem('access_token');
-    isLoggedIn.value = false;
+    store.setAuthenticated(false);
     router.push({ name: 'login' });
 };
 </script>
@@ -25,8 +20,8 @@ const logout = () => {
                     Test</span>
             </router-link>
             <div class="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
-                <template v-if="isLoggedIn">
-                    <button @click="logout"
+                <template v-if="store.isAuthenticated">
+                    <button @click="handleLogout"
                         class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">Logout</button>
                 </template>
                 <template v-else>

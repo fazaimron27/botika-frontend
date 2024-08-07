@@ -2,6 +2,7 @@
 import { ref, inject } from 'vue';
 import { useRouter } from 'vue-router';
 import api from "../api";
+import { store } from '../store';
 
 const router = useRouter();
 
@@ -22,6 +23,7 @@ const handleLogin = async () => {
         .then(res => res.data)
         .then((res) => {
             localStorage.setItem('access_token', res.data.access_token);
+            store.setAuthenticated(true);
             router.push({ name: 'dashboard' });
             showSuccessToast('Login successful!');
         })
