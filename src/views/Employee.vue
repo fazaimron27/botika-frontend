@@ -122,6 +122,11 @@ onMounted(() => {
                         </th>
                         <th>
                             <span class="flex items-center">
+                                Department
+                            </span>
+                        </th>
+                        <th>
+                            <span class="flex items-center">
                                 Status
                             </span>
                         </th>
@@ -141,6 +146,9 @@ onMounted(() => {
                         <td class="font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ employee.phone }}
                         </td>
                         <td class="font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ employee.job }}
+                        </td>
+                        <td class="font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ employee.department
+                            }}
                         </td>
                         <td :class="{ 'text-green-800 dark:text-green-300': employee.status === 'active', 'text-red-800 dark:text-red-300': employee.status === 'inactive' }"
                             class="font-medium text-gray-900 whitespace-nowrap dark:text-white">
