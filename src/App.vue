@@ -1,30 +1,47 @@
 <script setup>
-import HelloWorld from './components/HelloWorld.vue'
+import { ref, provide } from 'vue';
+import Nav from './components/Nav.vue';
+import Toast from './components/Toast.vue';
+
+const showToast = ref(false);
+const toastType = ref('');
+const toastMessage = ref('');
+
+const showSuccessToast = (message) => {
+    toastType.value = 'success';
+    toastMessage.value = message;
+    showToast.value = true;
+};
+
+const showErrorToast = (message) => {
+    toastType.value = 'error';
+    toastMessage.value = message;
+    showToast.value = true;
+};
+
+provide('showSuccessToast', showSuccessToast);
+provide('showErrorToast', showErrorToast);
+provide('showToast', showToast);
+provide('toastType', toastType);
+provide('toastMessage', toastMessage);
 </script>
 
 <template>
-  <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
-  </div>
-  <HelloWorld msg="Vite + Vue" />
+    <Nav />
+    <div class="toast-container">
+        <Toast v-if="showToast" :type="toastType" :message="toastMessage" @update:show="showToast = false" />
+    </div>
+    <router-view></router-view>
 </template>
 
 <style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
+.toast-container {
+    position: fixed;
+    top: 50px;
+    /* Adjust this value as needed */
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    /* Ensure it is above other elements */
 }
 </style>
